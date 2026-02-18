@@ -17,7 +17,10 @@ type DayCellElement = HTMLElement & {
 }
 
 function dateToKey(date: Date): string {
-  return date.toISOString().split('T')[0]
+  const year = date.getFullYear()
+  const month = String(date.getMonth() + 1).padStart(2, '0')
+  const day = String(date.getDate()).padStart(2, '0')
+  return `${year}-${month}-${day}`
 }
 
 function monthKeyFromDate(date: Date): string {
@@ -26,7 +29,11 @@ function monthKeyFromDate(date: Date): string {
 }
 
 function applyMoodDecorations(dayCell: DayCellElement, dateKey: string, entry: MoodEntry | undefined, onDaySelected: (date: string) => void) {
+  const todayKey = dateToKey(new Date())
+  const isFutureDate = dateKey > todayKey
+
   dayCell.classList.add('mood-day-cell')
+  dayCell.classList.toggle('future-day-disabled', isFutureDate)
 
   const existingMarker = dayCell.querySelector('.mood-thumbnail')
   if (existingMarker) {
@@ -37,9 +44,13 @@ function applyMoodDecorations(dayCell: DayCellElement, dateKey: string, entry: M
     dayCell.removeEventListener('click', dayCell.__moodClickHandler)
   }
 
-  const clickHandler: EventListener = () => onDaySelected(dateKey)
-  dayCell.__moodClickHandler = clickHandler
-  dayCell.addEventListener('click', clickHandler)
+  if (!isFutureDate) {
+    const clickHandler: EventListener = () => onDaySelected(dateKey)
+    dayCell.__moodClickHandler = clickHandler
+    dayCell.addEventListener('click', clickHandler)
+  } else {
+    delete dayCell.__moodClickHandler
+  }
 
   if (!entry) {
     dayCell.classList.remove('has-mood-entry')

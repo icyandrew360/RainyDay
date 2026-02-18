@@ -11,6 +11,13 @@ function currentMonthKey(date: Date): string {
   return `${date.getFullYear()}-${month}`
 }
 
+function toDateKey(date: Date): string {
+  const year = date.getFullYear()
+  const month = String(date.getMonth() + 1).padStart(2, '0')
+  const day = String(date.getDate()).padStart(2, '0')
+  return `${year}-${month}-${day}`
+}
+
 function monthLabel(monthKey: string): string {
   const [yearPart, monthPart] = monthKey.split('-')
   const year = Number(yearPart)
@@ -23,6 +30,10 @@ function monthLabel(monthKey: string): string {
     month: 'long',
     year: 'numeric',
   })
+}
+
+function isFutureDate(dateString: string): boolean {
+  return dateString > toDateKey(new Date())
 }
 
 function App() {
@@ -65,6 +76,10 @@ function App() {
   }, [journal.entries, visibleMonthKey])
 
   const handleDaySelected = (date: string) => {
+    if (isFutureDate(date)) {
+      return
+    }
+
     setSelectedDate(date)
     setModalMode(journal.entries[date] ? 'view' : 'create')
   }

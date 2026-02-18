@@ -51,9 +51,23 @@
   cursor: pointer;
 }
 
+.calendar-section .fc-daygrid-day.future-day-disabled {
+  cursor: default;
+  opacity: 0.52;
+}
+
+.calendar-section .fc-daygrid-day.future-day-disabled .fc-daygrid-day-frame {
+  background: #f6f1e7;
+}
+
 .calendar-section .fc-daygrid-day:hover .fc-daygrid-day-frame {
   transform: translateY(-0.0625rem);
   box-shadow: inset 0 0 0 0.0625rem rgba(216, 103, 63, 0.25);
+}
+
+.calendar-section .fc-daygrid-day.future-day-disabled:hover .fc-daygrid-day-frame {
+  transform: none;
+  box-shadow: none;
 }
 
 .calendar-section .fc-daygrid-day.mood-day-cell.has-mood-entry {
