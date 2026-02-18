@@ -73,6 +73,21 @@
   font-size: 0.94rem;
 }
 
+.app-mood-chip {
+  justify-self: start;
+  min-width: 2.4rem;
+  border-radius: 999rem;
+  padding: 0.1rem 0.55rem;
+  color: #fff;
+  text-align: center;
+  width: 100%;
+  box-shadow: 0 0.4rem 0.8rem -0.5rem rgba(22, 28, 37, 0.7);
+}
+
+.app-mood-chip-empty {
+  background: #8f8d88;
+}
+
 body.modal-open {
   overflow: hidden;
 }

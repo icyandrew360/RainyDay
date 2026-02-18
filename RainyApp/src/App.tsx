@@ -4,6 +4,7 @@ import { CalendarSection } from './components/calendar/CalendarSection'
 import { MoodEntryModal } from './components/calendar/MoodEntryModal'
 import { loadMoodJournal, saveMoodJournal } from './data/moodStorage'
 import type { EntryModalMode, MoodEntry, MoodJournal } from './types/calendar'
+import { moodToColor } from './utils/moodColor'
 
 function App() {
   const [journal, setJournal] = useState<MoodJournal>(() => loadMoodJournal())
@@ -99,7 +100,12 @@ function App() {
           </p>
           <p className="app-metric">
             <span className="app-metric-label">Average mood</span>
-            <strong>{summary.averageMood ?? '--'}</strong>
+            <strong
+              className={`app-mood-chip ${summary.averageMood === null ? 'app-mood-chip-empty' : ''}`}
+              style={summary.averageMood === null ? undefined : { backgroundColor: moodToColor(summary.averageMood) }}
+            >
+              {summary.averageMood ?? '--'}
+            </strong>
           </p>
           <p className="app-metric">
             <span className="app-metric-label">Scale</span>
