@@ -35,9 +35,34 @@
   border-radius: 8px;
 }
 
-.calendar-section .fc-daygrid-event {
-  border-radius: 8px;
-  border: 0;
-  background: linear-gradient(135deg, #5bb4ff 0%, #3794f0 100%);
-  padding: 0.15rem 0.35rem;
+.calendar-section .fc-daygrid-day {
+  cursor: pointer;
+}
+
+.calendar-section .fc-daygrid-day.mood-day-cell.has-mood-entry {
+  background: linear-gradient(180deg, var(--mood-tint) 0%, #ffffff 72%);
+}
+
+.calendar-section .fc-daygrid-day.mood-day-cell.has-mood-entry:hover {
+  background: linear-gradient(180deg, var(--mood-tint) 0%, #f4fbff 78%);
+}
+
+.calendar-section .fc-daygrid-day-top {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.calendar-section .mood-thumbnail {
+  margin-left: 0.35rem;
+  min-width: 2.05rem;
+  padding: 0.1rem 0.45rem;
+  border-radius: 999px;
+  color: #ffffff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  line-height: 1.25;
+  box-shadow: 0 8px 14px -10px rgba(17, 46, 77, 0.8);
+  pointer-events: none;
 }

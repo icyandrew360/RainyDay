@@ -1,5 +1,3 @@
-import type { CalendarEvent } from '../types/calendar'
+import type { MoodEntry } from '../types/calendar'
 
-const today = new Date().toISOString().split('T')[0]
-
-export const calendarEvents: CalendarEvent[] = [{ title: 'Project Start', date: today }]
+export const calendarEntries: Record<string, MoodEntry> = {}
