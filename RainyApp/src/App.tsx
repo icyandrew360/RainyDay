@@ -31,6 +31,17 @@ function App() {
     return journal.entries[selectedDate]
   }, [journal.entries, selectedDate])
 
+  const summary = useMemo(() => {
+    const allEntries = Object.values(journal.entries)
+    const totalDays = allEntries.length
+    const averageMood =
+      totalDays === 0
+        ? null
+        : Math.round(allEntries.reduce((sum, entry) => sum + entry.mood, 0) / totalDays)
+
+    return { totalDays, averageMood }
+  }, [journal.entries])
+
   const handleDaySelected = (date: string) => {
     setSelectedDate(date)
     setModalMode(journal.entries[date] ? 'view' : 'create')
@@ -78,8 +89,23 @@ function App() {
   return (
     <div className="app-shell">
       <header className="app-header">
+        <p className="app-eyebrow">Mood Journal</p>
         <h1 className="app-title">MoodyMap</h1>
-        <p className="app-subtitle">Track your day from 0 to 100 and spot patterns at a glance.</p>
+        <p className="app-subtitle">Track your days with color and reflection, then spot emotional trends over time.</p>
+        <div className="app-metrics" aria-label="mood summary">
+          <p className="app-metric">
+            <span className="app-metric-label">Days tracked</span>
+            <strong>{summary.totalDays}</strong>
+          </p>
+          <p className="app-metric">
+            <span className="app-metric-label">Average mood</span>
+            <strong>{summary.averageMood ?? '--'}</strong>
+          </p>
+          <p className="app-metric">
+            <span className="app-metric-label">Scale</span>
+            <strong>0 red → 100 green</strong>
+          </p>
+        </div>
       </header>
       <main className="app-main">
         <CalendarSection entries={journal.entries} onDaySelected={handleDaySelected} />

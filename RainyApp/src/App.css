@@ -1,29 +1,76 @@
 .app-shell {
-  width: min(1080px, 100%);
+  width: min(70rem, 100%);
   margin: 0 auto;
-  padding: 2.75rem 1rem 2rem;
+  padding: 2.8rem 1rem 2.2rem;
 }
 
 .app-header {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.6rem;
+  text-align: center;
+  border: 0.0625rem solid rgba(255, 255, 255, 0.7);
+  border-radius: 1.5rem;
+  padding: 1.25rem 1rem 1.2rem;
+  background: linear-gradient(150deg, rgba(255, 255, 255, 0.88) 0%, rgba(255, 255, 255, 0.64) 100%);
+  backdrop-filter: blur(0.25rem);
+  box-shadow: 0 1.25rem 2.5rem -2.125rem rgba(79, 88, 114, 0.7);
+}
+
+.app-eyebrow {
+  margin: 0;
+  color: #70634f;
+  text-transform: uppercase;
+  letter-spacing: 0.13em;
+  font-size: 0.72rem;
+  font-weight: 700;
 }
 
 .app-title {
-  margin: 0;
-  color: #20303f;
-  font-size: clamp(2rem, 4vw, 2.5rem);
-  letter-spacing: 0.01em;
+  margin: 0.12rem 0 0;
+  color: #1d2933;
+  font-size: clamp(2.1rem, 4.6vw, 3rem);
+  letter-spacing: 0.008em;
 }
 
 .app-subtitle {
-  margin: 0.45rem 0 0;
-  color: #5f7185;
-  font-size: 1rem;
+  margin: 0.48rem auto 0;
+  color: #5d5d66;
+  font-size: 1.03rem;
+  max-width: 58ch;
 }
 
 .app-main {
   display: grid;
   gap: 1rem;
+}
+
+.app-metrics {
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.65rem;
+}
+
+.app-metric {
+  margin: 0;
+  border-radius: 0.875rem;
+  border: 0.0625rem solid #eadfce;
+  background: linear-gradient(160deg, #fff9f1 0%, #fffcf8 100%);
+  padding: 0.6rem 0.7rem;
+  display: grid;
+  gap: 0.08rem;
+}
+
+.app-metric-label {
+  color: #806d57;
+  font-size: 0.74rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.app-metric strong {
+  color: #273546;
+  font-size: 0.94rem;
 }
 
 body.modal-open {
@@ -37,18 +84,18 @@ body.modal-open {
   display: grid;
   place-items: center;
   padding: 1.25rem;
-  background: rgba(15, 24, 35, 0.5);
-  backdrop-filter: blur(3px);
+  background: rgba(29, 26, 21, 0.43);
+  backdrop-filter: blur(0.3125rem);
 }
 
 .mood-modal-panel {
-  width: min(760px, 100%);
-  max-height: min(92vh, 920px);
+  width: min(47.5rem, 100%);
+  max-height: min(92vh, 57.5rem);
   overflow: auto;
-  border-radius: 24px;
-  border: 1px solid #cfe3f8;
-  background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
-  box-shadow: 0 36px 80px -36px rgba(21, 62, 103, 0.6);
+  border-radius: 1.5rem;
+  border: 0.0625rem solid #ebd7bd;
+  background: linear-gradient(180deg, #fffdfa 0%, #fffaf4 45%, #fffdfa 100%);
+  box-shadow: 0 2.5rem 5.625rem -2.375rem rgba(89, 66, 37, 0.65);
   padding: 1.6rem;
 }
 
@@ -58,14 +105,14 @@ body.modal-open {
 
 .mood-modal-date {
   margin: 0;
-  color: #4d6984;
+  color: #8a6f49;
   font-weight: 600;
   font-size: 0.95rem;
 }
 
 .mood-modal-title {
   margin: 0.2rem 0 0;
-  color: #1d2f45;
+  color: #2a2f36;
   font-size: clamp(1.25rem, 3vw, 1.8rem);
 }
 
@@ -76,30 +123,30 @@ body.modal-open {
 }
 
 .mood-field-label {
-  color: #2c4259;
+  color: #33425a;
   font-weight: 600;
 }
 
 .mood-slider {
   width: 100%;
-  accent-color: #2f87ea;
+  accent-color: #2c9e66;
 }
 
 .mood-note {
   width: 100%;
-  border: 1px solid #ccdeef;
-  border-radius: 14px;
+  border: 0.0625rem solid #e4d3ba;
+  border-radius: 0.875rem;
   padding: 0.8rem;
   font: inherit;
-  color: #23384f;
+  color: #273546;
   resize: vertical;
-  min-height: 160px;
-  background: #fdfefe;
+  min-height: 10rem;
+  background: #fffefc;
 }
 
 .mood-note:focus {
-  outline: 2px solid #6db6ff;
-  outline-offset: 2px;
+  outline: 0.125rem solid #5cb382;
+  outline-offset: 0.125rem;
 }
 
 .mood-score-row {
@@ -111,11 +158,11 @@ body.modal-open {
 }
 
 .mood-note-display {
-  border-radius: 14px;
-  border: 1px solid #d6e5f4;
-  background: #f9fcff;
+  border-radius: 0.875rem;
+  border: 0.0625rem solid #ebdbc8;
+  background: #fffefb;
   padding: 0.8rem 0.95rem;
-  min-height: 140px;
+  min-height: 8.75rem;
   color: #2c4056;
   white-space: pre-wrap;
 }
@@ -132,7 +179,7 @@ body.modal-open {
 
 .btn {
   border: 0;
-  border-radius: 11px;
+  border-radius: 0.6875rem;
   padding: 0.6rem 1rem;
   font: inherit;
   font-weight: 600;
@@ -140,24 +187,32 @@ body.modal-open {
 }
 
 .btn-secondary {
-  color: #24405d;
-  background: #e9f2fb;
+  color: #4d4b44;
+  background: #f4ede1;
 }
 
 .btn-secondary:hover {
-  background: #dcecff;
+  background: #e9decd;
 }
 
 .btn-primary {
   color: #ffffff;
-  background: linear-gradient(145deg, #2f87ea 0%, #2a75d0 100%);
+  background: linear-gradient(145deg, #2ea264 0%, #1f8d53 100%);
 }
 
 .btn-primary:hover {
   filter: brightness(1.06);
 }
 
-@media (max-width: 720px) {
+@media (max-width: 45rem) {
+  .app-header {
+    text-align: left;
+  }
+
+  .app-metrics {
+    grid-template-columns: 1fr;
+  }
+
   .mood-modal-panel {
     padding: 1.15rem;
   }
