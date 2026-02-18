@@ -6,3 +6,4 @@ usin python venv
 
 need to install
 `npm install @fullcalendar/react @fullcalendar/core @fullcalendar/daygrid`
+`npm install @fullcalendar/interaction`

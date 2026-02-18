@@ -1,0 +1,43 @@
+.calendar-section {
+  padding: 1rem;
+  border-radius: 18px;
+  background: #ffffff;
+  box-shadow: 0 18px 40px -28px rgba(23, 75, 130, 0.4);
+  border: 1px solid #dce9f8;
+}
+
+.calendar-section .fc {
+  --fc-border-color: #e4edf8;
+  --fc-page-bg-color: #ffffff;
+  --fc-neutral-bg-color: #f8fbff;
+  --fc-today-bg-color: #eaf5ff;
+  --fc-button-bg-color: #2f87ea;
+  --fc-button-border-color: #2f87ea;
+  --fc-button-hover-bg-color: #2478d8;
+  --fc-button-hover-border-color: #2478d8;
+  --fc-button-active-bg-color: #1b66bd;
+  --fc-button-active-border-color: #1b66bd;
+}
+
+.calendar-section .fc-toolbar-title {
+  color: #1f2f41;
+  font-size: clamp(1.1rem, 2vw, 1.5rem);
+}
+
+.calendar-section .fc .fc-button {
+  border-radius: 10px;
+  box-shadow: none;
+  text-transform: capitalize;
+  font-weight: 600;
+}
+
+.calendar-section .fc-daygrid-day-frame {
+  border-radius: 8px;
+}
+
+.calendar-section .fc-daygrid-event {
+  border-radius: 8px;
+  border: 0;
+  background: linear-gradient(135deg, #5bb4ff 0%, #3794f0 100%);
+  padding: 0.15rem 0.35rem;
+}

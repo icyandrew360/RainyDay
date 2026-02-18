@@ -1,28 +1,16 @@
-import FullCalendar from '@fullcalendar/react'
-import dayGridPlugin from '@fullcalendar/daygrid'
-
-// Optional: Type definition for an event if you decide to add more later
-interface CalendarEvent {
-  title: string;
-  date: string;
-}
+import './App.css'
+import { CalendarSection } from './components/calendar/CalendarSection'
 
 function App() {
-  // Basic event data to show something on the calendar
-  const events: CalendarEvent[] = [
-    { title: 'Project Start', date: new Date().toISOString().split('T')[0] }
-  ];
-
   return (
-    <div style={{ padding: '20px', fontFamily: 'Arial, sans-serif' }}>
-      <h1>My Calendar</h1>
-      <FullCalendar
-        plugins={[dayGridPlugin]}
-        initialView="dayGridMonth"
-        weekends={true}
-        events={events}
-        // FullCalendar v6+ handles CSS automatically via the plugin imports
-      />
+    <div className="app-shell">
+      <header className="app-header">
+        <h1 className="app-title">My Calendar</h1>
+        <p className="app-subtitle">A simple view of your month at a glance.</p>
+      </header>
+      <main className="app-main">
+        <CalendarSection />
+      </main>
     </div>
   )
 }
