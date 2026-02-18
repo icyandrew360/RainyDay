@@ -103,7 +103,7 @@ function App() {
           </p>
           <p className="app-metric">
             <span className="app-metric-label">Scale</span>
-            <strong>0 red → 100 green</strong>
+            <strong>0 → 100 (red → green)</strong>
           </p>
         </div>
       </header>
