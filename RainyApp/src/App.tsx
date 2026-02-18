@@ -6,10 +6,30 @@ import { loadMoodJournal, saveMoodJournal } from './data/moodStorage'
 import type { EntryModalMode, MoodEntry, MoodJournal } from './types/calendar'
 import { moodToColor } from './utils/moodColor'
 
+function currentMonthKey(date: Date): string {
+  const month = String(date.getMonth() + 1).padStart(2, '0')
+  return `${date.getFullYear()}-${month}`
+}
+
+function monthLabel(monthKey: string): string {
+  const [yearPart, monthPart] = monthKey.split('-')
+  const year = Number(yearPart)
+  const monthIndex = Number(monthPart) - 1
+  if (!Number.isFinite(year) || !Number.isFinite(monthIndex) || monthIndex < 0 || monthIndex > 11) {
+    return monthKey
+  }
+
+  return new Date(year, monthIndex, 1).toLocaleDateString(undefined, {
+    month: 'long',
+    year: 'numeric',
+  })
+}
+
 function App() {
   const [journal, setJournal] = useState<MoodJournal>(() => loadMoodJournal())
   const [selectedDate, setSelectedDate] = useState<string | null>(null)
   const [modalMode, setModalMode] = useState<EntryModalMode | null>(null)
+  const [visibleMonthKey, setVisibleMonthKey] = useState<string>(() => currentMonthKey(new Date()))
 
   useEffect(() => {
     const body = document.body
@@ -33,15 +53,16 @@ function App() {
   }, [journal.entries, selectedDate])
 
   const summary = useMemo(() => {
-    const allEntries = Object.values(journal.entries)
-    const totalDays = allEntries.length
+    const monthPrefix = `${visibleMonthKey}-`
+    const monthEntries = Object.values(journal.entries).filter((entry) => entry.date.startsWith(monthPrefix))
+    const totalDays = monthEntries.length
     const averageMood =
       totalDays === 0
         ? null
-        : Math.round(allEntries.reduce((sum, entry) => sum + entry.mood, 0) / totalDays)
+        : Math.round(monthEntries.reduce((sum, entry) => sum + entry.mood, 0) / totalDays)
 
     return { totalDays, averageMood }
-  }, [journal.entries])
+  }, [journal.entries, visibleMonthKey])
 
   const handleDaySelected = (date: string) => {
     setSelectedDate(date)
@@ -95,11 +116,11 @@ function App() {
         <p className="app-subtitle">Track your days with color and reflection, then spot emotional trends over time.</p>
         <div className="app-metrics" aria-label="mood summary">
           <p className="app-metric">
-            <span className="app-metric-label">Days tracked</span>
+            <span className="app-metric-label">Days this month</span>
             <strong>{summary.totalDays}</strong>
           </p>
           <p className="app-metric">
-            <span className="app-metric-label">Average mood</span>
+            <span className="app-metric-label">Average this month</span>
             <strong
               className={`app-mood-chip ${summary.averageMood === null ? 'app-mood-chip-empty' : ''}`}
               style={summary.averageMood === null ? undefined : { backgroundColor: moodToColor(summary.averageMood) }}
@@ -108,13 +129,13 @@ function App() {
             </strong>
           </p>
           <p className="app-metric">
-            <span className="app-metric-label">Scale</span>
-            <strong>0 → 100 (red → green)</strong>
+            <span className="app-metric-label">Analyzing month</span>
+            <strong>{monthLabel(visibleMonthKey)}</strong>
           </p>
         </div>
       </header>
       <main className="app-main">
-        <CalendarSection entries={journal.entries} onDaySelected={handleDaySelected} />
+        <CalendarSection entries={journal.entries} onDaySelected={handleDaySelected} onMonthChange={setVisibleMonthKey} />
       </main>
 
       {modalMode && selectedDate ? (

@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
-import type { DayCellMountArg } from '@fullcalendar/core'
+import type { DatesSetArg, DayCellMountArg } from '@fullcalendar/core'
 import type { MoodEntry } from '../../types/calendar'
 import { moodToColor, moodToTint } from '../../utils/moodColor'
 import './CalendarSection.css'
@@ -9,6 +9,7 @@ import './CalendarSection.css'
 interface CalendarSectionProps {
   entries: Record<string, MoodEntry>
   onDaySelected: (date: string) => void
+  onMonthChange: (monthKey: string) => void
 }
 
 type DayCellElement = HTMLElement & {
@@ -17,6 +18,11 @@ type DayCellElement = HTMLElement & {
 
 function dateToKey(date: Date): string {
   return date.toISOString().split('T')[0]
+}
+
+function monthKeyFromDate(date: Date): string {
+  const month = String(date.getMonth() + 1).padStart(2, '0')
+  return `${date.getFullYear()}-${month}`
 }
 
 function applyMoodDecorations(dayCell: DayCellElement, dateKey: string, entry: MoodEntry | undefined, onDaySelected: (date: string) => void) {
@@ -59,7 +65,7 @@ function applyMoodDecorations(dayCell: DayCellElement, dateKey: string, entry: M
   markerHost.appendChild(marker)
 }
 
-export function CalendarSection({ entries, onDaySelected }: CalendarSectionProps) {
+export function CalendarSection({ entries, onDaySelected, onMonthChange }: CalendarSectionProps) {
   const sectionRef = useRef<HTMLElement | null>(null)
 
   useEffect(() => {
@@ -93,6 +99,10 @@ export function CalendarSection({ entries, onDaySelected }: CalendarSectionProps
     }
   }
 
+  const handleDatesSet = (arg: DatesSetArg) => {
+    onMonthChange(monthKeyFromDate(arg.view.currentStart))
+  }
+
   return (
     <section className="calendar-section" ref={sectionRef}>
       <FullCalendar
@@ -106,6 +116,7 @@ export function CalendarSection({ entries, onDaySelected }: CalendarSectionProps
         events={[]}
         height="auto"
         fixedWeekCount={false}
+        datesSet={handleDatesSet}
         dayCellDidMount={renderMoodPreview}
         dayCellWillUnmount={cleanupDayCell}
       />

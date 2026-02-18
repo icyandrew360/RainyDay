@@ -25,6 +25,16 @@
   font-weight: 700;
 }
 
+.calendar-section .fc .fc-toolbar.fc-header-toolbar {
+  position: relative;
+}
+
+.calendar-section .fc .fc-toolbar-chunk:nth-child(2) {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
 .calendar-section .fc .fc-button {
   border-radius: 0.75rem;
   box-shadow: none;
