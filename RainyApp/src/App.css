@@ -7,6 +7,7 @@
 .app-header {
   margin-bottom: 1.6rem;
   text-align: center;
+  position: relative;
   border: 0.0625rem solid rgba(255, 255, 255, 0.7);
   border-radius: 1.5rem;
   padding: 1.25rem 1rem 1.2rem;
@@ -29,6 +30,25 @@
   color: #1d2933;
   font-size: clamp(2.1rem, 4.6vw, 3rem);
   letter-spacing: 0.008em;
+}
+
+.theme-toggle {
+  position: absolute;
+  top: 0.9rem;
+  right: 0.9rem;
+  border: 0.0625rem solid #dfcfba;
+  background: #fff8ee;
+  color: #4a473f;
+  border-radius: 999rem;
+  padding: 0.35rem 0.75rem;
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.theme-toggle:hover {
+  background: #f0e5d6;
 }
 
 .app-subtitle {
@@ -219,6 +239,99 @@ body.modal-open {
   filter: brightness(1.06);
 }
 
+body.theme-dark .app-header {
+  border-color: rgba(103, 124, 153, 0.35);
+  background: linear-gradient(150deg, rgba(27, 35, 46, 0.92) 0%, rgba(18, 24, 33, 0.88) 100%);
+  box-shadow: 0 1.25rem 2.5rem -2.125rem rgba(4, 8, 14, 0.95);
+}
+
+body.theme-dark .app-eyebrow {
+  color: #96b0cb;
+}
+
+body.theme-dark .app-title {
+  color: #e4edf7;
+}
+
+body.theme-dark .app-subtitle {
+  color: #b7c6d7;
+}
+
+body.theme-dark .theme-toggle {
+  border-color: #3f556f;
+  background: #1f2d3d;
+  color: #dbe7f4;
+}
+
+body.theme-dark .theme-toggle:hover {
+  background: #2a3d53;
+}
+
+body.theme-dark .app-metric {
+  border-color: #36495f;
+  background: linear-gradient(170deg, #192432 0%, #1d2b3b 100%);
+}
+
+body.theme-dark .app-metric-label {
+  color: #9bb3cb;
+}
+
+body.theme-dark .app-metric strong {
+  color: #e7eef7;
+}
+
+body.theme-dark .app-mood-chip-empty {
+  background: #5e6c7a;
+}
+
+body.theme-dark .mood-modal-backdrop {
+  background: rgba(7, 10, 15, 0.68);
+}
+
+body.theme-dark .mood-modal-panel {
+  border-color: #3a4d63;
+  background: linear-gradient(180deg, #18222f 0%, #1d2a3a 45%, #18222f 100%);
+  box-shadow: 0 2.5rem 5.625rem -2.375rem rgba(5, 10, 18, 1);
+}
+
+body.theme-dark .mood-modal-date {
+  color: #91afca;
+}
+
+body.theme-dark .mood-modal-title {
+  color: #e3ecf6;
+}
+
+body.theme-dark .mood-field-label,
+body.theme-dark .mood-score-row {
+  color: #c8d6e6;
+}
+
+body.theme-dark .mood-note {
+  border-color: #40556d;
+  color: #e4edf7;
+  background: #101a25;
+}
+
+body.theme-dark .mood-note:focus {
+  outline-color: #5db98b;
+}
+
+body.theme-dark .mood-note-display {
+  border-color: #3c5067;
+  background: #111b27;
+  color: #d4e0ee;
+}
+
+body.theme-dark .btn-secondary {
+  color: #dbe7f4;
+  background: #2f4055;
+}
+
+body.theme-dark .btn-secondary:hover {
+  background: #3a4f68;
+}
+
 @media (max-width: 45rem) {
   .app-header {
     text-align: left;
@@ -238,5 +351,10 @@ body.modal-open {
 
   .btn {
     flex: 1;
+  }
+
+  .theme-toggle {
+    position: static;
+    margin-top: 0.7rem;
   }
 }

@@ -97,3 +97,50 @@
   box-shadow: 0 0.5rem 0.875rem -0.625rem rgba(17, 46, 77, 0.8);
   pointer-events: none;
 }
+
+body.theme-dark .calendar-section {
+  background: linear-gradient(180deg, rgba(23, 32, 43, 0.96) 0%, rgba(18, 26, 36, 0.94) 100%);
+  box-shadow: 0 1.75rem 3.375rem -2.25rem rgba(4, 8, 14, 1);
+  border-color: #334559;
+}
+
+body.theme-dark .calendar-section .fc {
+  --fc-border-color: #364b60;
+  --fc-page-bg-color: #1a2634;
+  --fc-neutral-bg-color: #14202d;
+  --fc-today-bg-color: #2b3c4d;
+  --fc-button-bg-color: #3d8fb3;
+  --fc-button-border-color: #3d8fb3;
+  --fc-button-hover-bg-color: #2f7b9b;
+  --fc-button-hover-border-color: #2f7b9b;
+  --fc-button-active-bg-color: #266582;
+  --fc-button-active-border-color: #266582;
+}
+
+body.theme-dark .calendar-section .fc-toolbar-title {
+  color: #e3edf7;
+}
+
+body.theme-dark .calendar-section .fc-daygrid-day.future-day-disabled .fc-daygrid-day-frame {
+  background: #253547;
+}
+
+body.theme-dark .calendar-section .fc-daygrid-day:hover .fc-daygrid-day-frame {
+  box-shadow: inset 0 0 0 0.0625rem rgba(68, 121, 152, 0.4);
+}
+
+body.theme-dark .calendar-section .fc-daygrid-day.mood-day-cell.has-mood-entry {
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--mood-color) 34%, #1a2634) 0%,
+    #1a2634 76%
+  );
+}
+
+body.theme-dark .calendar-section .fc-daygrid-day.mood-day-cell.has-mood-entry:hover {
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--mood-color) 42%, #1d2b3b) 0%,
+    #1d2b3b 80%
+  );
+}

@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react'
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import type { DatesSetArg, DayCellMountArg } from '@fullcalendar/core'
+import { isFutureDateKey, toDateKey, toMonthKey } from '../../domain/moodJournal'
 import type { MoodEntry } from '../../types/calendar'
 import { moodToColor, moodToTint } from '../../utils/moodColor'
 import './CalendarSection.css'
@@ -16,21 +17,8 @@ type DayCellElement = HTMLElement & {
   __moodClickHandler?: EventListener
 }
 
-function dateToKey(date: Date): string {
-  const year = date.getFullYear()
-  const month = String(date.getMonth() + 1).padStart(2, '0')
-  const day = String(date.getDate()).padStart(2, '0')
-  return `${year}-${month}-${day}`
-}
-
-function monthKeyFromDate(date: Date): string {
-  const month = String(date.getMonth() + 1).padStart(2, '0')
-  return `${date.getFullYear()}-${month}`
-}
-
 function applyMoodDecorations(dayCell: DayCellElement, dateKey: string, entry: MoodEntry | undefined, onDaySelected: (date: string) => void) {
-  const todayKey = dateToKey(new Date())
-  const isFutureDate = dateKey > todayKey
+  const isFutureDate = isFutureDateKey(dateKey)
 
   dayCell.classList.add('mood-day-cell')
   dayCell.classList.toggle('future-day-disabled', isFutureDate)
@@ -98,7 +86,7 @@ export function CalendarSection({ entries, onDaySelected, onMonthChange }: Calen
 
   const renderMoodPreview = (arg: DayCellMountArg) => {
     const dayCell = arg.el as DayCellElement
-    const dateKey = dateToKey(arg.date)
+    const dateKey = toDateKey(arg.date)
     applyMoodDecorations(dayCell, dateKey, entries[dateKey], onDaySelected)
   }
 
@@ -111,7 +99,7 @@ export function CalendarSection({ entries, onDaySelected, onMonthChange }: Calen
   }
 
   const handleDatesSet = (arg: DatesSetArg) => {
-    onMonthChange(monthKeyFromDate(arg.view.currentStart))
+    onMonthChange(toMonthKey(arg.view.currentStart))
   }
 
   return (

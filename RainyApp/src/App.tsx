@@ -3,44 +3,33 @@ import './App.css'
 import { CalendarSection } from './components/calendar/CalendarSection'
 import { MoodEntryModal } from './components/calendar/MoodEntryModal'
 import { loadMoodJournal, saveMoodJournal } from './data/moodStorage'
+import { formatMonthKey, isFutureDateKey, summarizeMonth, toMonthKey } from './domain/moodJournal'
 import type { EntryModalMode, MoodEntry, MoodJournal } from './types/calendar'
 import { moodToColor } from './utils/moodColor'
 
-function currentMonthKey(date: Date): string {
-  const month = String(date.getMonth() + 1).padStart(2, '0')
-  return `${date.getFullYear()}-${month}`
-}
+type ThemeMode = 'light' | 'dark'
 
-function toDateKey(date: Date): string {
-  const year = date.getFullYear()
-  const month = String(date.getMonth() + 1).padStart(2, '0')
-  const day = String(date.getDate()).padStart(2, '0')
-  return `${year}-${month}-${day}`
-}
+const THEME_STORAGE_KEY = 'moodymap.themeMode'
 
-function monthLabel(monthKey: string): string {
-  const [yearPart, monthPart] = monthKey.split('-')
-  const year = Number(yearPart)
-  const monthIndex = Number(monthPart) - 1
-  if (!Number.isFinite(year) || !Number.isFinite(monthIndex) || monthIndex < 0 || monthIndex > 11) {
-    return monthKey
+function initialThemeMode(): ThemeMode {
+  if (typeof window === 'undefined') {
+    return 'light'
   }
 
-  return new Date(year, monthIndex, 1).toLocaleDateString(undefined, {
-    month: 'long',
-    year: 'numeric',
-  })
-}
+  const savedTheme = window.localStorage.getItem(THEME_STORAGE_KEY)
+  if (savedTheme === 'light' || savedTheme === 'dark') {
+    return savedTheme
+  }
 
-function isFutureDate(dateString: string): boolean {
-  return dateString > toDateKey(new Date())
+  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
 }
 
 function App() {
   const [journal, setJournal] = useState<MoodJournal>(() => loadMoodJournal())
   const [selectedDate, setSelectedDate] = useState<string | null>(null)
   const [modalMode, setModalMode] = useState<EntryModalMode | null>(null)
-  const [visibleMonthKey, setVisibleMonthKey] = useState<string>(() => currentMonthKey(new Date()))
+  const [visibleMonthKey, setVisibleMonthKey] = useState<string>(() => toMonthKey(new Date()))
+  const [themeMode, setThemeMode] = useState<ThemeMode>(() => initialThemeMode())
 
   useEffect(() => {
     const body = document.body
@@ -55,6 +44,12 @@ function App() {
     }
   }, [modalMode])
 
+  useEffect(() => {
+    const body = document.body
+    body.classList.toggle('theme-dark', themeMode === 'dark')
+    window.localStorage.setItem(THEME_STORAGE_KEY, themeMode)
+  }, [themeMode])
+
   const selectedEntry = useMemo(() => {
     if (!selectedDate) {
       return undefined
@@ -63,20 +58,10 @@ function App() {
     return journal.entries[selectedDate]
   }, [journal.entries, selectedDate])
 
-  const summary = useMemo(() => {
-    const monthPrefix = `${visibleMonthKey}-`
-    const monthEntries = Object.values(journal.entries).filter((entry) => entry.date.startsWith(monthPrefix))
-    const totalDays = monthEntries.length
-    const averageMood =
-      totalDays === 0
-        ? null
-        : Math.round(monthEntries.reduce((sum, entry) => sum + entry.mood, 0) / totalDays)
-
-    return { totalDays, averageMood }
-  }, [journal.entries, visibleMonthKey])
+  const summary = useMemo(() => summarizeMonth(journal.entries, visibleMonthKey), [journal.entries, visibleMonthKey])
 
   const handleDaySelected = (date: string) => {
-    if (isFutureDate(date)) {
+    if (isFutureDateKey(date)) {
       return
     }
 
@@ -123,10 +108,17 @@ function App() {
     closeModal()
   }
 
+  const toggleThemeMode = () => {
+    setThemeMode((currentTheme) => (currentTheme === 'light' ? 'dark' : 'light'))
+  }
+
   return (
     <div className="app-shell">
       <header className="app-header">
         <p className="app-eyebrow">Mood Journal</p>
+        <button type="button" className="theme-toggle" onClick={toggleThemeMode} aria-pressed={themeMode === 'dark'}>
+          {themeMode === 'dark' ? 'Light mode' : 'Dark mode'}
+        </button>
         <h1 className="app-title">MoodyMap</h1>
         <p className="app-subtitle">Track your days with color and reflection, then spot emotional trends over time.</p>
         <div className="app-metrics" aria-label="mood summary">
@@ -145,7 +137,7 @@ function App() {
           </p>
           <p className="app-metric">
             <span className="app-metric-label">Analyzing month</span>
-            <strong>{monthLabel(visibleMonthKey)}</strong>
+            <strong>{formatMonthKey(visibleMonthKey)}</strong>
           </p>
         </div>
       </header>

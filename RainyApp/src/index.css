@@ -26,3 +26,12 @@ body {
     radial-gradient(circle at 50% 95%, rgba(243, 202, 95, 0.22) 0%, rgba(243, 202, 95, 0) 40%),
     linear-gradient(160deg, #fff9ef 0%, #fcfbf8 46%, #f6f7fb 100%);
 }
+
+body.theme-dark {
+  color: #d6e2ef;
+  background:
+    radial-gradient(circle at 8% 12%, rgba(218, 89, 48, 0.2) 0%, rgba(218, 89, 48, 0) 34%),
+    radial-gradient(circle at 88% 0%, rgba(33, 191, 115, 0.14) 0%, rgba(33, 191, 115, 0) 30%),
+    radial-gradient(circle at 50% 95%, rgba(53, 84, 122, 0.3) 0%, rgba(53, 84, 122, 0) 45%),
+    linear-gradient(160deg, #0f1620 0%, #131c27 46%, #101823 100%);
+}
